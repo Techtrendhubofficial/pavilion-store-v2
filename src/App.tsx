@@ -15,12 +15,12 @@ export default function App() {
   const addToCart = (id: number) => { setCart([...cart, id]); alert("Added to cart!"); };
   const go = (p: string) => setPage(p);
 
-  // 包含 GMC 审核必需的所有政策
+  // 包含 GMC 审核必需的所有政策（已更新为专业邮箱）
   const info: any = {
     about: ["About Us", "Pavilion Venture is an online retailer based in Shah Alam, Malaysia. We sell quality electronics and lifestyle products at fair prices."],
     terms: ["Terms of Service", "By using this website, you agree to our terms. All prices are in MYR. Orders are confirmed after payment is received."],
     privacy: ["Privacy Policy", "We collect only the information needed to process your order. We do not sell your personal data to third parties."],
-    contact: ["Contact Us", "Email: pavilionventure@gmail.com. Location: Shah Alam, Selangor, Malaysia. We reply within 1-2 working days."],
+    contact: ["Contact Us", "Email: support@pavilionventure.com. Location: Shah Alam, Selangor, Malaysia. We reply within 1-2 working days."],
     shipping: ["Shipping & Returns", "Domestic (Malaysia): 1-3 working days. Free shipping over RM 100. International: 7-15 working days. Returns accepted within 7 days if unused."],
     refund: ["Refund Policy", "We offer a 30-day refund guarantee. If your item is defective, we will issue a full refund. Refunds processed within 3-5 working days."],
   };
@@ -77,7 +77,7 @@ export default function App() {
 
       <footer className="bg-white border-t py-8 text-center text-sm text-gray-500">
         <p>© 2026 Pavilion Venture. All rights reserved.</p>
-        <p className="mt-2">Email: pavilionventure@gmail.com | Shah Alam, Selangor, Malaysia</p>
+        <p className="mt-2">Email: support@pavilionventure.com | Shah Alam, Selangor, Malaysia</p>
       </footer>
     </div>
   );
