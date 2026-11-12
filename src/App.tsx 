@@ -1,91 +1,107 @@
-import React from 'react';
+import React, { useState } from 'react';
 
 const products = [
-  { id: 1, name: "Hotel Camera Detection Wireless Signal Detector", price: "135.00 MYR", desc: "High precision RF signal detector for hotel privacy protection.", image: "https://oss-cf.cjdropshipping.com/product/2024/12/04/08/df70d3f5-5e5e-434f-ba9d-8229f04d2925_trans.jpeg" },
-  { id: 2, name: "Women's Yoga Vest Halter Tank-top", price: "88.00 MYR", desc: "Premium breathable halter yoga vest with cross back design.", image: "https://cf.cjdropshipping.com/quick/product/003a8c75-de1c-47a9-a976-18fdfaeabe97.jpg" },
-  { id: 3, name: "POEDAGAR Dual Display Luminous Watch", price: "129.00 MYR", desc: "Luxury analog+digital dual display, waterproof stainless strap.", image: "https://timeelegance.com.bd/cdn/shop/files/web_1_9e67c706-d41a-48de-9432-3685c4792625.jpg" },
-  { id: 4, name: "4K Foldable RC Drone with 3 Batteries", price: "745.00 MYR", desc: "Pro dual camera drone with WiFi FPV and obstacle avoidance.", image: "https://cf.cjdropshipping.com/38719179-6fbd-4822-8b8c-cf3aad912581.jpg" },
-  { id: 5, name: "French-Style One-Shoulder Vacation Dress", price: "74.00 MYR", desc: "Chic asymmetrical A-line dress for parties and streetwear.", image: "https://cf.cjdropshipping.com/quick/product/2be89b01-404d-4276-9058-f1ad1e9c54d5.jpg" },
+  { id: 1, name: "Laptop", price: 2999, oldPrice: 3599, img: "💻", desc: "High performance laptop for work and study" },
+  { id: 2, name: "Smartphone", price: 1899, oldPrice: 2199, img: "📱", desc: "Latest smartphone with great camera" },
+  { id: 3, name: "Headphones", price: 299, oldPrice: 399, img: "🎧", desc: "Wireless noise cancelling headphones" },
+  { id: 4, name: "Smart Watch", price: 799, oldPrice: 999, img: "⌚", desc: "Smart watch with health tracking" },
 ];
 
-const Section: React.FC<{ id: string; title: string; children: React.ReactNode }> = ({ id, title, children }) => (
-  <section id={id} className="max-w-4xl mx-auto px-4 py-8 border-t border-slate-800">
-    <h2 className="text-2xl font-bold mb-4 text-white">{title}</h2>
-    <div className="text-slate-400 leading-relaxed space-y-3">{children}</div>
-  </section>
-);
+function Section({ title, children }: { title: string, children: React.ReactNode }) {
+  return (
+    <div className="max-w-4xl mx-auto px-4 py-10">
+      <h2 className="text-2xl font-bold mb-4">{title}</h2>
+      <div className="text-gray-700 leading-relaxed space-y-4">{children}</div>
+    </div>
+  );
+}
 
 export default function App() {
+  const [page, setPage] = useState('home');
+  const [cart, setCart] = useState<number[]>([]);
+
+  const addToCart = (id: number) => {
+    setCart([...cart, id]);
+    alert("Added to cart!");
+  };
+
+  if (page !== 'home') {
+    return (
+      <div className="min-h-screen bg-white">
+        <header className="p-4 border-b flex justify-between items-center max-w-4xl mx-auto">
+          <h1 className="font-bold text-xl cursor-pointer" onClick={() => setPage('home')}>Pavilion Venture</h1>
+          <button onClick={() => setPage('home')} className="bg-black text-white px-4 py-2 rounded">Back Home</button>
+        </header>
+        {page === 'about' && (
+          <Section title="About Us">
+            <p>Pavilion Venture is an online retailer based in Shah Alam, Malaysia. We sell quality electronics and lifestyle products at fair prices.</p>
+            <p>We focus on fast delivery, honest pricing and good after-sales service.</p>
+          </Section>
+        )}
+        {page === 'terms' && (
+          <Section title="Terms of Service">
+            <p>By using this website, you agree to our terms. All prices are in MYR. We reserve the right to update product prices and availability without prior notice.</p>
+            <p>Orders are confirmed after payment is received. Delivery time depends on location.</p>
+          </Section>
+        )}
+        {page === 'privacy' && (
+          <Section title="Privacy Policy">
+            <p>We collect only the information needed to process your order, such as name, address and contact number.</p>
+            <p>We do not sell your personal data to third parties. Your information is used only for order delivery and customer support.</p>
+          </Section>
+        )}
+        {page === 'contact' && (
+          <Section title="Contact Us">
+            <p>Email: pavilionventure@gmail.com</p>
+            <p>Location: Shah Alam, Selangor, Malaysia</p>
+            <p>We reply within 1-2 working days.</p>
+          </Section>
+        )}
+      </div>
+    );
+  }
+
   return (
-    <div className="min-h-screen flex flex-col font-sans">
-      <header className="bg-[#0f172a] p-4 border-b border-slate-800 sticky top-0 z-50">
-        <div className="max-w-4xl mx-auto flex justify-between items-center">
-          <h1 className="text-xl font-bold text-white">Pavilion Venture Store</h1>
-          <nav className="hidden md:flex gap-4 text-sm text-slate-400">
-            <a href="#about" className="hover:text-white">About</a>
-            <a href="#shipping" className="hover:text-white">Shipping</a>
-            <a href="#privacy" className="hover:text-white">Privacy</a>
-            <a href="#contact" className="hover:text-white">Contact</a>
-          </nav>
+    <div className="min-h-screen bg-gray-50">
+      <header className="bg-white shadow sticky top-0 z-10">
+        <div className="max-w-6xl mx-auto px-4 py-4 flex justify-between items-center">
+          <h1 className="text-2xl font-bold">Pavilion Venture</h1>
+          <div className="flex gap-4 text-sm">
+            <button onClick={() => setPage('about')}>About</button>
+            <button onClick={() => setPage('terms')}>Terms</button>
+            <button onClick={() => setPage('privacy')}>Privacy</button>
+            <button onClick={() => setPage('contact')}>Contact</button>
+            <span>🛒 Cart ({cart.length})</span>
+          </div>
         </div>
       </header>
 
-      <div className="bg-blue-900/20 p-8 text-center border-b border-slate-800">
-        <h2 className="text-3xl font-bold mb-2">Trusted Tech & Lifestyle Store</h2>
-        <p className="text-slate-400">Secure checkout · 7-day returns · Tracked worldwide delivery</p>
+      <div className="bg-black text-white text-center py-16 px-4">
+        <h2 className="text-4xl font-bold mb-4">Quality Products, Fair Prices</h2>
+        <p className="text-gray-300">Shop electronics and lifestyle products in Malaysia</p>
       </div>
 
-      <main className="flex-1 max-w-4xl mx-auto p-4 w-full">
-        <h2 className="text-2xl font-bold mb-4 mt-6">Featured Products</h2>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          {products.map((p) => (
-            <div key={p.id} className="bg-[#1e293b] rounded-lg overflow-hidden border border-slate-700 p-4 flex flex-col">
-              <img src={p.image} alt={p.name} className="w-full h-48 object-cover rounded mb-4" />
-              <h3 className="text-lg font-bold mb-1">{p.name}</h3>
-              <p className="text-slate-400 text-sm mb-3 flex-1">{p.desc}</p>
-              <p className="text-blue-400 text-xl font-bold mb-3">{p.price}</p>
-              <button className="w-full bg-black hover:bg-gray-900 text-white font-medium py-2 px-4 rounded flex items-center justify-center gap-2 border border-gray-700">
-                <span className="text-lg font-bold">G</span> Pay
-              </button>
-            </div>
-          ))}
+      <div className="max-w-6xl mx-auto px-4 py-10 grid grid-cols-2 md:grid-cols-4 gap-4">
+        {products.map((p) => (
+          <div key={p.id} className="bg-white rounded-xl p-4 shadow text-center">
+            <div className="text-5xl mb-3">{p.img}</div>
+            <h3 className="font-bold">{p.name}</h3>
+            <p className="text-xs text-gray-500 my-2">{p.desc}</p>
+            <p className="text-red-600 font-bold">RM {p.price} <span className="text-gray-400 line-through text-sm font-normal">RM {p.oldPrice}</span></p>
+            <button onClick={() => addToCart(p.id)} className="mt-3 w-full bg-black text-white py-2 rounded-lg">Add to Cart</button>
+          </div>
+        ))}
+      </div>
+
+      <footer className="bg-white border-t py-8 text-center text-sm text-gray-500">
+        <p>© 2026 Pavilion Venture. All rights reserved.</p>
+        <p className="mt-2">Email: pavilionventure@gmail.com | Shah Alam, Selangor, Malaysia</p>
+        <div className="mt-2 flex justify-center gap-4">
+          <button onClick={() => setPage('about')}>About</button>
+          <button onClick={() => setPage('terms')}>Terms</button>
+          <button onClick={() => setPage('privacy')}>Privacy</button>
+          <button onClick={() => setPage('contact')}>Contact</button>
         </div>
-      </main>
-
-      <Section id="about" title="About Us">
-        <p>Pavilion Venture is an authorized online retailer based in Kuala Lumpur, Malaysia, specializing in tech gadgets, fashion apparel, watches, and lifestyle accessories.</p>
-        <p>We partner with verified suppliers to deliver quality products worldwide with full tracking.</p>
-      </Section>
-
-      <Section id="shipping" title="Shipping & Returns">
-        <p><strong className="text-white">Domestic (Malaysia):</strong> 1–3 business days via J&T / Pos Laju. Free shipping on orders over RM 100.</p>
-        <p><strong className="text-white">International:</strong> 7–15 business days via tracked courier.</p>
-        <p><strong className="text-white">Returns:</strong> Items may be returned within 7 days of delivery if unused, in original packaging.</p>
-      </Section>
-
-      <Section id="refund" title="Refund Policy">
-        <p>We offer a <strong className="text-white">30-day refund guarantee</strong>. If your item is defective or wrong, we will issue a full refund or free replacement.</p>
-        <p>Refunds are processed within 3–5 business days after we receive the returned item.</p>
-      </Section>
-
-      <Section id="privacy" title="Privacy Policy">
-        <p>We collect only the data necessary to fulfill your order. We never sell or share your personal data with third parties.</p>
-        <p>All transactions are encrypted via SSL. Payment details are processed securely by Google Pay.</p>
-      </Section>
-
-      <Section id="terms" title="Terms of Service">
-        <p>By purchasing from Pavilion Venture you agree to our pricing, shipping, and return policies listed above.</p>
-        <p>All products are sold with a standard manufacturer warranty.</p>
-      </Section>
-
-      <Section id="contact" title="Contact Us">
-        <p><strong className="text-white">Email:</strong> support@pavilionventure.com</p>
-        <p><strong className="text-white">Address:</strong> Pavilion Venture Official, Kuala Lumpur, Malaysia</p>
-        <p><strong className="text-white">Hours:</strong> Mon–Fri, 9:00 AM – 6:00 PM (MYT)</p>
-      </Section>
-
-      <footer className="bg-[#0f172a] border-t border-slate-800 p-6 text-center text-xs text-slate-500">
-        © 2026 Pavilion Venture. All rights reserved.
       </footer>
     </div>
   );
