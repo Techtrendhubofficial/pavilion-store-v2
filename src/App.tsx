@@ -28,9 +28,11 @@ export default function App() {
   if (page !== 'home') {
     return (
       <div className="min-h-screen bg-white text-black">
-        <header className="p-4 border-b flex justify-between items-center max-w-4xl mx-auto">
-          <h1 className="font-bold text-xl cursor-pointer text-black" onClick={() => setPage('home')}>Pavilion Venture</h1>
-          <button onClick={() => setPage('home')} className="bg-black text-white px-4 py-2 rounded">Back Home</button>
+        <header className="p-4 border-b">
+          <div className="max-w-4xl mx-auto flex flex-col items-center gap-2 text-center">
+            <h1 className="font-bold text-xl cursor-pointer text-black whitespace-nowrap" onClick={() => setPage('home')}>Pavilion Venture</h1>
+            <button onClick={() => setPage('home')} className="bg-black text-white px-4 py-2 rounded">Back Home</button>
+          </div>
         </header>
         {page === 'about' && (
           <Section title="About Us">
@@ -64,14 +66,14 @@ export default function App() {
   return (
     <div className="min-h-screen bg-gray-50 text-black">
       <header className="bg-white shadow sticky top-0 z-10">
-        <div className="max-w-6xl mx-auto px-4 py-4 flex justify-between items-center">
-          <h1 className="text-2xl font-bold text-black">Pavilion Venture</h1>
-          <div className="flex gap-4 text-sm text-black">
+        <div className="max-w-6xl mx-auto px-4 py-3 flex flex-col items-center gap-2">
+          <h1 className="text-xl font-bold text-black whitespace-nowrap">Pavilion Venture</h1>
+          <div className="flex flex-wrap justify-center gap-x-4 gap-y-1 text-sm text-black">
             <button onClick={() => setPage('about')}>About</button>
             <button onClick={() => setPage('terms')}>Terms</button>
             <button onClick={() => setPage('privacy')}>Privacy</button>
             <button onClick={() => setPage('contact')}>Contact</button>
-            <span>🛒 Cart ({cart.length})</span>
+            <span className="whitespace-nowrap">🛒 Cart ({cart.length})</span>
           </div>
         </div>
       </header>
@@ -81,28 +83,4 @@ export default function App() {
         <p className="text-gray-300">Shop electronics and lifestyle products in Malaysia</p>
       </div>
 
-      <div className="max-w-6xl mx-auto px-4 py-10 grid grid-cols-2 md:grid-cols-4 gap-4">
-        {products.map((p) => (
-          <div key={p.id} className="bg-white rounded-xl p-4 shadow text-center">
-            <div className="text-5xl mb-3">{p.img}</div>
-            <h3 className="font-bold text-black">{p.name}</h3>
-            <p className="text-xs text-gray-500 my-2">{p.desc}</p>
-            <p className="text-red-600 font-bold">RM {p.price} <span className="text-gray-400 line-through text-sm font-normal">RM {p.oldPrice}</span></p>
-            <button onClick={() => addToCart(p.id)} className="mt-3 w-full bg-black text-white py-2 rounded-lg">Add to Cart</button>
-          </div>
-        ))}
-      </div>
-
-      <footer className="bg-white border-t py-8 text-center text-sm text-gray-500">
-        <p>© 2026 Pavilion Venture. All rights reserved.</p>
-        <p className="mt-2">Email: pavilionventure@gmail.com | Shah Alam, Selangor, Malaysia</p>
-        <div className="mt-2 flex justify-center gap-4">
-          <button onClick={() => setPage('about')}>About</button>
-          <button onClick={() => setPage('terms')}>Terms</button>
-          <button onClick={() => setPage('privacy')}>Privacy</button>
-          <button onClick={() => setPage('contact')}>Contact</button>
-        </div>
-      </footer>
-    </div>
-  );
-}
+      <div className="max-w-6xl mx-auto px
