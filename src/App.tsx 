@@ -69,24 +69,4 @@ export default function App() {
       </Section>
 
       <Section id="privacy" title="Privacy Policy">
-        <p>We collect only the data necessary to fulfill your order. We never sell or share your personal data with third parties.</p>
-        <p>All transactions are encrypted via SSL. Payment details are processed securely by Google Pay.</p>
-      </Section>
-
-      <Section id="terms" title="Terms of Service">
-        <p>By purchasing from Pavilion Venture you agree to our pricing, shipping, and return policies listed above.</p>
-        <p>All products are sold with a standard manufacturer warranty.</p>
-      </Section>
-
-      <Section id="contact" title="Contact Us">
-        <p><strong className="text-white">Email:</strong> support@pavilionventure.com</p>
-        <p><strong className="text-white">Address:</strong> Pavilion Venture Official, Kuala Lumpur, Malaysia</p>
-        <p><strong className="text-white">Hours:</strong> Mon–Fri, 9:00 AM – 6:00 PM (MYT)</p>
-      </Section>
-
-      <footer className="bg-[#0f172a] border-t border-slate-800 p-6 text-center text-xs text-slate-500">
-        © 2026 Pavilion Venture. All rights reserved.
-      </footer>
-    </div>
-  );
-}
+        <p>We collect only the data necessary to fulfill your order. We never
