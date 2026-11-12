@@ -10,7 +10,7 @@ const products = [
 function Section({ title, children }: { title: string, children: React.ReactNode }) {
   return (
     <div className="max-w-4xl mx-auto px-4 py-10">
-      <h2 className="text-2xl font-bold mb-4">{title}</h2>
+      <h2 className="text-2xl font-bold mb-4 text-black">{title}</h2>
       <div className="text-gray-700 leading-relaxed space-y-4">{children}</div>
     </div>
   );
@@ -27,9 +27,9 @@ export default function App() {
 
   if (page !== 'home') {
     return (
-      <div className="min-h-screen bg-white">
+      <div className="min-h-screen bg-white text-black">
         <header className="p-4 border-b flex justify-between items-center max-w-4xl mx-auto">
-          <h1 className="font-bold text-xl cursor-pointer" onClick={() => setPage('home')}>Pavilion Venture</h1>
+          <h1 className="font-bold text-xl cursor-pointer text-black" onClick={() => setPage('home')}>Pavilion Venture</h1>
           <button onClick={() => setPage('home')} className="bg-black text-white px-4 py-2 rounded">Back Home</button>
         </header>
         {page === 'about' && (
@@ -62,11 +62,11 @@ export default function App() {
   }
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-gray-50 text-black">
       <header className="bg-white shadow sticky top-0 z-10">
         <div className="max-w-6xl mx-auto px-4 py-4 flex justify-between items-center">
-          <h1 className="text-2xl font-bold">Pavilion Venture</h1>
-          <div className="flex gap-4 text-sm">
+          <h1 className="text-2xl font-bold text-black">Pavilion Venture</h1>
+          <div className="flex gap-4 text-sm text-black">
             <button onClick={() => setPage('about')}>About</button>
             <button onClick={() => setPage('terms')}>Terms</button>
             <button onClick={() => setPage('privacy')}>Privacy</button>
@@ -77,7 +77,7 @@ export default function App() {
       </header>
 
       <div className="bg-black text-white text-center py-16 px-4">
-        <h2 className="text-4xl font-bold mb-4">Quality Products, Fair Prices</h2>
+        <h2 className="text-4xl font-bold mb-4 text-white">Quality Products, Fair Prices</h2>
         <p className="text-gray-300">Shop electronics and lifestyle products in Malaysia</p>
       </div>
 
@@ -85,7 +85,7 @@ export default function App() {
         {products.map((p) => (
           <div key={p.id} className="bg-white rounded-xl p-4 shadow text-center">
             <div className="text-5xl mb-3">{p.img}</div>
-            <h3 className="font-bold">{p.name}</h3>
+            <h3 className="font-bold text-black">{p.name}</h3>
             <p className="text-xs text-gray-500 my-2">{p.desc}</p>
             <p className="text-red-600 font-bold">RM {p.price} <span className="text-gray-400 line-through text-sm font-normal">RM {p.oldPrice}</span></p>
             <button onClick={() => addToCart(p.id)} className="mt-3 w-full bg-black text-white py-2 rounded-lg">Add to Cart</button>
