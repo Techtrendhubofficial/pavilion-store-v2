@@ -52,7 +52,6 @@ export default function App() {
         </div>
       </main>
 
-      {/* 下面是 GMC 审核必看的 6 大政策页面 */}
       <Section id="about" title="About Us">
         <p>Pavilion Venture is an authorized online retailer based in Kuala Lumpur, Malaysia, specializing in tech gadgets, fashion apparel, watches, and lifestyle accessories.</p>
         <p>We partner with verified suppliers to deliver quality products worldwide with full tracking.</p>
