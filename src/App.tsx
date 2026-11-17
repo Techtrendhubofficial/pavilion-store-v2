@@ -18,7 +18,7 @@ const PRODUCTS: Product[] = [
     name: "Women's Yoga Vest Halter Beautiful Back Tank-top",
     price: "19.56",
     oldPrice: "26.90",
-    image: "https://cf.cjdropshipping.com/quick/product/003a8c75-de1c-47a9-a976-18fdfaeabe97.jpg",
+    image: "https://cjdropshipping.com",
     desc: "Premium breathable women's halter yoga vest with cross beautiful back design, comfortable sports workout fitness athletic tank top.",
     brand: "Generic"
   },
@@ -28,7 +28,7 @@ const PRODUCTS: Product[] = [
     name: "POEDAGAR Multifunction Dual Display Luminous Quartz Men's Watch",
     price: "29.90",
     oldPrice: "45.00",
-    image: "https://timeelegance.com.bd/cdn/shop/files/web_1_9e67c706-d41a-48de-9432-3685c4792625.jpg",
+    image: "https://timeelegance.com.bd",
     desc: "POEDAGAR luxury multifunction analog and digital dual display watch with luminous hands, waterproof stainless steel strap.",
     brand: "POEDAGAR"
   },
@@ -38,7 +38,7 @@ const PRODUCTS: Product[] = [
     name: "3 Batteries Pro Drone 4K Selfie Camera Wifi Fpv Foldable Rc Quadcopter",
     price: "165.55",
     oldPrice: "219.00",
-    image: "https://cf.cjdropshipping.com/38719179-6fbd-4822-8b8c-cf3aad912581.jpg",
+    image: "https://cjdropshipping.com",
     desc: "Professional 4K dual camera foldable aerial drone with 3 high-capacity batteries, real-time WiFi FPV transmission and obstacle avoidance.",
     brand: "Generic"
   },
@@ -48,7 +48,7 @@ const PRODUCTS: Product[] = [
     name: "Women's French-Style Asymmetrical One-Shoulder Vacation Casual Dress",
     price: "16.49",
     oldPrice: "24.50",
-    image: "https://cf.cjdropshipping.com/quick/product/2be89b01-404d-4276-9058-f1ad1e9c54d5.jpg",
+    image: "https://cjdropshipping.com",
     desc: "Chic French-inspired irregular one-shoulder solid color A-line dress with flattering drape. Ideal for vacations and parties.",
     brand: "Generic"
   }
@@ -76,7 +76,6 @@ export default function App() {
   const [shippingAddress, setShippingAddress] = useState<string>('');
   const [orderSubmitted, setOrderSubmitted] = useState<boolean>(false);
 
-  // 支持独立单品URL参数 ?product=PV-US-02，确保GMC爬虫抓到精确单品页
   useEffect(() => {
     const params = new URLSearchParams(window.location.search);
     const prodId = params.get('product');
@@ -186,19 +185,16 @@ export default function App() {
 
   return (
     <div style={{ fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif', color: '#111827', backgroundColor: '#f9fafb', minHeight: '100vh', display: 'flex', flexDirection: 'column', margin: 0 }}>
-      {/* 顶部通知栏 */}
       <div style={{ backgroundColor: '#111827', color: '#ffffff', textAlign: 'center', fontSize: '12px', padding: '8px 16px', letterSpacing: '0.3px' }}>
         Free Tracked Shipping to the United States &amp; Middle East · Prices in USD ($)
       </div>
 
-      {/* 顶部导航栏 */}
       <header style={{ backgroundColor: '#ffffff', borderBottom: '1px solid #e5e7eb', position: 'sticky', top: 0, zIndex: 40 }}>
         <div style={{ maxWidth: '1150px', margin: '0 auto', padding: '14px 20px', display: 'flex', flexWrap: 'wrap', alignItems: 'center', justifyContent: 'space-between', gap: '12px' }}>
           <div onClick={() => goHome('All')} style={{ fontSize: '20px', fontWeight: 800, cursor: 'pointer', letterSpacing: '-0.5px' }}>
             PAVILION VENTURE
           </div>
 
-          {/* 分类导航 */}
           <nav style={{ display: 'flex', flexWrap: 'wrap', gap: '18px', fontSize: '14px', fontWeight: 500 }}>
             {['All', 'Electronics', 'Watches', 'Fashion'].map((cat) => (
               <button
@@ -212,14 +208,13 @@ export default function App() {
                   fontWeight: selectedCategory === cat && !selectedProduct && !policyPage ? 700 : 500,
                   color: selectedCategory === cat && !selectedProduct && !policyPage ? '#111827' : '#6b7280',
                   borderBottom: selectedCategory === cat && !selectedProduct && !policyPage ? '2px solid #111827' : '2px solid transparent'
-                }}
+                }}^
               >
                 {cat === 'All' ? 'All Products' : cat}
               </button>
             ))}
           </nav>
 
-          {/* 购物车按钮 */}
           <button
             onClick={() => { setCartOpen(true); setOrderSubmitted(false); }}
             style={{ backgroundColor: '#111827', color: '#ffffff', border: 'none', borderRadius: '8px', padding: '8px 14px', fontSize: '13px', fontWeight: 600, cursor: 'pointer' }}
@@ -228,6 +223,145 @@ export default function App() {
           </button>
         </div>
       </header>
-
-      {/* 轻提示 Toast */}
       {toast && (
+        <div style={{ position: 'fixed', bottom: '24px', right: '24px', backgroundColor: '#111827', color: '#fff', padding: '12px 18px', borderRadius: '8px', fontSize: '13px', boxShadow: '0 10px 15px -3px rgba(0,0,0,0.2)', zIndex: 60 }}>
+          {toast}
+        </div>
+      )}
+
+      <main style={{ flex: 1, maxWidth: '1150px', width: '100%', margin: '0 auto', padding: '28px 20px', boxSizing: 'border-box' }}>
+        {policyPage && policies[policyPage] ? (
+          <div style={{ backgroundColor: '#ffffff', padding: '32px', borderRadius: '12px', border: '1px solid #e5e7eb', maxWidth: '800px', margin: '0 auto' }}>
+            <button onClick={() => goHome('All')} style={{ background: 'none', border: 'none', color: '#4b5563', cursor: 'pointer', fontSize: '14px', marginBottom: '16px', padding: 0 }}>
+              ← Back to Store
+            </button>
+            <h1 style={{ fontSize: '24px', fontWeight: 700, marginBottom: '16px' }}>{policies[policyPage].title}</h1>
+            <p style={{ fontSize: '15px', lineHeight: 1.7, color: '#374151', whiteSpace: 'pre-line' }}>
+              {policies[policyPage].content}
+            </p>
+          </div>
+        ) : selectedProduct ? (
+          <div style={{ backgroundColor: '#ffffff', padding: '28px', borderRadius: '12px', border: '1px solid #e5e7eb' }}>
+            <button onClick={() => goHome('All')} style={{ background: 'none', border: 'none', color: '#4b5563', cursor: 'pointer', fontSize: '14px', marginBottom: '20px', padding: 0 }}>
+              ← Back to Products
+            </button>
+            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '32px', alignItems: 'start' }}>
+              <img
+                src={selectedProduct.image}
+                alt={selectedProduct.name}
+                style={{ width: '100%', maxHeight: '420px', objectFit: 'contain', borderRadius: '10px', backgroundColor: '#f3f4f6', padding: '12px', boxSizing: 'border-box' }}
+              />
+              <div>
+                <div style={{ fontSize: '12px', color: '#6b7280', textTransform: 'uppercase', fontWeight: 600, marginBottom: '6px' }}>
+                  {selectedProduct.category} · SKU: {selectedProduct.id}
+                </div>
+                <h1 style={{ fontSize: '24px', fontWeight: 700, lineHeight: 1.3, margin: '0 0 14px 0' }}>{selectedProduct.name}</h1>
+                <div style={{ display: 'flex', alignItems: 'baseline', gap: '12px', marginBottom: '16px' }}>
+                  <span style={{ fontSize: '26px', fontWeight: 800, color: '#dc2626' }}>${selectedProduct.price} USD</span>
+                  <span style={{ fontSize: '16px', color: '#9ca3af', textDecoration: 'line-through' }}>${selectedProduct.oldPrice} USD</span>
+                </div>
+                <div style={{ display: 'inline-block', backgroundColor: '#ecfdf5', color: '#065f46', fontSize: '12px', fontWeight: 600, padding: '4px 10px', borderRadius: '6px', marginBottom: '18px' }}>
+                  ✓ In Stock · Free Tracked Shipping to US &amp; Middle East
+                </div>
+                <p style={{ fontSize: '15px', lineHeight: 1.6, color: '#4b5563', marginBottom: '24px' }}>{selectedProduct.desc}</p>
+                <button
+                  onClick={() => addToCart(selectedProduct)}
+                  style={{ width: '100%', maxWidth: '320px', backgroundColor: '#111827', color: '#ffffff', border: 'none', borderRadius: '8px', padding: '14px 20px', fontSize: '15px', fontWeight: 600, cursor: 'pointer' }}
+                >
+                  Add to Cart — ${selectedProduct.price} USD
+                </button>
+              </div>
+            </div>
+          </div>
+        ) : (
+          <>
+            <div style={{ backgroundColor: '#111827', color: '#ffffff', borderRadius: '14px', padding: '36px 24px', textAlign: 'center', marginBottom: '28px' }}>
+              <h1 style={{ fontSize: '28px', fontWeight: 800, margin: '0 0 8px 0' }}>Curated Tech, Watches &amp; Lifestyle</h1>
+              <p style={{ fontSize: '14px', color: '#d1d5db', margin: 0 }}>
+                Exclusively Serving the United States &amp; Middle East · 30-Day Returns · Tracked Delivery
+              </p>
+            </div>
+
+            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(240px, 1fr))', gap: '20px' }}>
+              {filteredProducts.map((p) => (
+                <div
+                  key={p.id}
+                  style={{ backgroundColor: '#ffffff', borderRadius: '12px', border: '1px solid #e5e7eb', padding: '16px', display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}
+                >
+                  <div>
+                    <img
+                      src={p.image}
+                      alt={p.name}
+                      onClick={() => openProduct(p)}
+                      style={{ width: '100%', height: '210px', objectFit: 'contain', backgroundColor: '#f9fafb', borderRadius: '8px', marginBottom: '12px', cursor: 'pointer' }}
+                    />
+                    <div style={{ fontSize: '11px', color: '#6b7280', fontWeight: 600, marginBottom: '4px' }}>{p.category}</div>
+                    <h3
+                      onClick={() => openProduct(p)}
+                      style={{ fontSize: '15px', fontWeight: 700, margin: '0 0 8px 0', lineHeight: 1.4, cursor: 'pointer' }}
+                    >
+                      {p.name}
+                    </h3>
+                    <p style={{ fontSize: '12px', color: '#6b7280', lineHeight: 1.5, margin: '0 0 14px 0' }}>{p.desc}</p>
+                  </div>
+
+                  <div>
+                    <div style={{ display: 'flex', alignItems: 'baseline', gap: '8px', marginBottom: '12px' }}>
+                      <span style={{ fontSize: '18px', fontWeight: 800, color: '#dc2626' }}>${p.price} USD</span>
+                      <span style={{ fontSize: '13px', color: '#9ca3af', textDecoration: 'line-through' }}>${p.oldPrice}</span>
+                    </div>
+                    <div style={{ display: 'flex', gap: '8px' }}>
+                      <button
+                        onClick={() => addToCart(p)}
+                        style={{ flex: 1, backgroundColor: '#111827', color: '#ffffff', border: 'none', borderRadius: '8px', padding: '10px', fontSize: '13px', fontWeight: 600, cursor: 'pointer' }}
+                      >
+                        Add to Cart
+                      </button>
+                      <button
+                        onClick={() => openProduct(p)}
+                        style={{ backgroundColor: '#f3f4f6', color: '#111827', border: '1px solid #d1d5db', borderRadius: '8px', padding: '10px 12px', fontSize: '13px', fontWeight: 600, cursor: 'pointer' }}
+                      >
+                        Details
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </>
+        )}
+      </main>
+
+      {cartOpen && (
+        <div style={{ position: 'fixed', inset: 0, backgroundColor: 'rgba(0,0,0,0.5)', zIndex: 50, display: 'flex', justifyContent: 'flex-end' }}>
+          <div style={{ backgroundColor: '#ffffff', width: '100%', maxWidth: '400px', height: '100%', padding: '24px', boxSizing: 'border-box', overflowY: 'auto', display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>
+            <div>
+              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', borderBottom: '1px solid #e5e7eb', paddingBottom: '14px', marginBottom: '16px' }}>
+                <h2 style={{ fontSize: '18px', fontWeight: 700, margin: 0 }}>Shopping Cart ({totalItems})</h2>
+                <button onClick={() => setCartOpen(false)} style={{ background: 'none', border: 'none', fontSize: '20px', cursor: 'pointer' }}>✕</button>
+              </div>
+
+              {orderSubmitted ? (
+                <div style={{ backgroundColor: '#ecfdf5', border: '1px solid #a7f3d0', padding: '20px', borderRadius: '10px', color: '#065f46' }}>
+                  <h3 style={{ margin: '0 0 8px 0', fontSize: '16px' }}>Order Request Received!</h3>
+                  <p style={{ margin: 0, fontSize: '13px', lineHeight: 1.5 }}>
+                    Thank you! An invoice and secure USD payment link have been sent to <strong>{customerEmail}</strong> for delivery to <strong>{country}</strong>.
+                  </p>
+                </div>
+              ) : cart.length === 0 ? (
+                <p style={{ color: '#6b7280', fontSize: '14px', textAlign: 'center', marginTop: '40px' }}>Your cart is empty.</p>
+              ) : (
+                <>
+                  {cart.map((item) => (
+                    <div key={item.product.id} style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '10px 0', borderBottom: '1px solid #f3f4f6', gap: '10px' }}>
+                      <div style={{ flex: 1 }}>
+                        <div style={{ fontSize: '13px', fontWeight: 600 }}>{item.product.name}</div>
+                        <div style={{ fontSize: '12px', color: '#dc2626', fontWeight: 700 }}>${item.product.price} USD</div>
+                      </div>
+                      <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
+                        <button onClick={() => updateQty(item.product.id, -1)} style={{ width: '24px', height: '24px', border: '1px solid #d1d5db', borderRadius: '4px', background: '#fff', cursor: 'pointer' }}>-</button>
+                        <span style={{ fontSize: '13px', fontWeight: 600 }}>{item.qty}</span>
+                        <button onClick={() => updateQty(item.product.id, 1)} style={{ width: '24px', height: '24px', border: '1px solid #d1d5db', borderRadius: '4px', background: '#fff', cursor: 'pointer' }}>+</button>
+                      </div>
+                    </div>
+                  ))}
