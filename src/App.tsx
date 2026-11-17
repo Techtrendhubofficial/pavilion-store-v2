@@ -1,100 +1,233 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 
-const products = [
-  { id: 1, name: "Hotel Camera Detection Wireless Signal Detector", price: "135.00", oldPrice: "180.00", image: "https://oss-cf.cjdropshipping.com/product/2024/12/04/08/df70d3f5-5e5e-434f-ba9d-8229f04d2925_trans.jpeg", desc: "High precision RF signal detector for hotel privacy protection." },
-  { id: 2, name: "Women's Yoga Vest Halter Tank-top", price: "88.00", oldPrice: "120.00", image: "https://cf.cjdropshipping.com/quick/product/003a8c75-de1c-47a9-a976-18fdfaeabe97.jpg", desc: "Premium breathable halter yoga vest with cross back design." },
-  { id: 3, name: "POEDAGAR Dual Display Luminous Watch", price: "129.00", oldPrice: "199.00", image: "https://timeelegance.com.bd/cdn/shop/files/web_1_9e67c706-d41a-48de-9432-3685c4792625.jpg", desc: "Luxury analog+digital dual display, waterproof stainless strap." },
-  { id: 4, name: "4K Foldable RC Drone with 3 Batteries", price: "745.00", oldPrice: "999.00", image: "https://cf.cjdropshipping.com/38719179-6fbd-4822-8b8c-cf3aad912581.jpg", desc: "Pro dual camera drone with WiFi FPV and obstacle avoidance." },
-  { id: 5, name: "French-Style One-Shoulder Vacation Dress", price: "74.00", oldPrice: "110.00", image: "https://cf.cjdropshipping.com/quick/product/2be89b01-404d-4276-9058-f1ad1e9c54d5.jpg", desc: "Chic asymmetrical A-line dress for parties and streetwear." },
+interface Product {
+  id: string;
+  category: string;
+  name: string;
+  price: string;
+  oldPrice: string;
+  image: string;
+  desc: string;
+  brand: string;
+}
+
+const PRODUCTS: Product[] = [
+  {
+    id: "PV-US-02",
+    category: "Fashion",
+    name: "Women's Yoga Vest Halter Beautiful Back Tank-top",
+    price: "19.56",
+    oldPrice: "26.90",
+    image: "https://cf.cjdropshipping.com/quick/product/003a8c75-de1c-47a9-a976-18fdfaeabe97.jpg",
+    desc: "Premium breathable women's halter yoga vest with cross beautiful back design, comfortable sports workout fitness athletic tank top.",
+    brand: "Generic"
+  },
+  {
+    id: "PV-US-03",
+    category: "Watches",
+    name: "POEDAGAR Multifunction Dual Display Luminous Quartz Men's Watch",
+    price: "29.90",
+    oldPrice: "45.00",
+    image: "https://timeelegance.com.bd/cdn/shop/files/web_1_9e67c706-d41a-48de-9432-3685c4792625.jpg",
+    desc: "POEDAGAR luxury multifunction analog and digital dual display watch with luminous hands, waterproof stainless steel strap.",
+    brand: "POEDAGAR"
+  },
+  {
+    id: "PV-US-04",
+    category: "Electronics",
+    name: "3 Batteries Pro Drone 4K Selfie Camera Wifi Fpv Foldable Rc Quadcopter",
+    price: "165.55",
+    oldPrice: "219.00",
+    image: "https://cf.cjdropshipping.com/38719179-6fbd-4822-8b8c-cf3aad912581.jpg",
+    desc: "Professional 4K dual camera foldable aerial drone with 3 high-capacity batteries, real-time WiFi FPV transmission and obstacle avoidance.",
+    brand: "Generic"
+  },
+  {
+    id: "PV-US-05",
+    category: "Fashion",
+    name: "Women's French-Style Asymmetrical One-Shoulder Vacation Casual Dress",
+    price: "16.49",
+    oldPrice: "24.50",
+    image: "https://cf.cjdropshipping.com/quick/product/2be89b01-404d-4276-9058-f1ad1e9c54d5.jpg",
+    desc: "Chic French-inspired irregular one-shoulder solid color A-line dress with flattering drape. Ideal for vacations and parties.",
+    brand: "Generic"
+  }
+];
+
+const ALLOWED_COUNTRIES = [
+  "United States",
+  "United Arab Emirates",
+  "Saudi Arabia",
+  "Kuwait",
+  "Qatar",
+  "Bahrain",
+  "Oman"
 ];
 
 export default function App() {
-  const [page, setPage] = useState('home');
-  const [cart, setCart] = useState<number[]>([]);
-  
-  const addToCart = (id: number) => { 
-    setCart([...cart, id]); 
-    alert("Added to cart!"); 
-  };
-  
-  const go = (p: string) => {
-    setPage(p);
+  const [selectedCategory, setSelectedCategory] = useState<string>('All');
+  const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
+  const [policyPage, setPolicyPage] = useState<string | null>(null);
+  const [cart, setCart] = useState<{ product: Product; qty: number }[]>([]);
+  const [cartOpen, setCartOpen] = useState<boolean>(false);
+  const [toast, setToast] = useState<string | null>(null);
+  const [country, setCountry] = useState<string>('United States');
+  const [customerEmail, setCustomerEmail] = useState<string>('');
+  const [shippingAddress, setShippingAddress] = useState<string>('');
+  const [orderSubmitted, setOrderSubmitted] = useState<boolean>(false);
+
+  // 支持独立单品URL参数 ?product=PV-US-02，确保GMC爬虫抓到精确单品页
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+    const prodId = params.get('product');
+    if (prodId) {
+      const found = PRODUCTS.find((p) => p.id === prodId);
+      if (found) setSelectedProduct(found);
+    }
+  }, []);
+
+  const openProduct = (product: Product) => {
+    setSelectedProduct(product);
+    setPolicyPage(null);
+    const url = new URL(window.location.href);
+    url.searchParams.set('product', product.id);
+    window.history.pushState({}, '', url.toString());
     window.scrollTo(0, 0);
   };
 
-  const info: any = {
-    about: ["About Us", "Pavilion Venture is an authorized online retailer based in Shah Alam, Malaysia, specializing in tech gadgets, fashion apparel, watches, and lifestyle accessories. We partner with verified suppliers to deliver quality products worldwide with full tracking."],
-    terms: ["Terms of Service", "By using this website, you agree to our terms. All prices are in MYR. Orders are confirmed after payment is received. We reserve the right to update product prices and availability without prior notice."],
-    privacy: ["Privacy Policy", "We collect only the data necessary to fulfill your order. We never sell or share your personal data with third parties. All transactions are encrypted via SSL. Payment details are processed securely."],
-    contact: ["Contact Us", "Email: support@pavilionventure.com\nLocation: Shah Alam, Selangor, Malaysia\nBusiness Hours: Mon-Fri, 9:00 AM - 6:00 PM (MYT)\nWe guarantee a reply within 1-2 working days."],
-    shipping: ["Shipping & Returns", "Domestic (Malaysia): 1-3 business days via J&T / Pos Laju. Free shipping on orders over RM 100.\nInternational: 7-15 business days via tracked courier.\nReturns: Items may be returned within 7 days of delivery if unused, in original packaging."],
-    refund: ["Refund Policy", "We offer a 30-day refund guarantee. If your item is defective or wrong, we will issue a full refund or free replacement. Refunds are processed within 3-5 business days after we receive the returned item."],
+  const goHome = (cat = 'All') => {
+    setSelectedProduct(null);
+    setPolicyPage(null);
+    setSelectedCategory(cat);
+    const url = new URL(window.location.href);
+    url.searchParams.delete('product');
+    window.history.pushState({}, '', url.toString());
+    window.scrollTo(0, 0);
   };
 
-  if (page !== 'home') {
-    return (
-      <div className="min-h-screen bg-white text-black font-sans">
-        <header className="p-4 border-b text-center bg-white sticky top-0 z-50">
-          <h1 className="font-bold text-xl text-black cursor-pointer" onClick={() => go('home')}>Pavilion Venture</h1>
-          <button onClick={() => go('home')} className="mt-2 bg-black text-white px-4 py-2 rounded hover:bg-gray-800">Back Home</button>
-        </header>
-        <div className="max-w-4xl mx-auto px-4 py-10">
-          <h2 className="text-2xl font-bold text-black mb-4">{info[page][0]}</h2>
-          <p className="text-gray-700 leading-relaxed whitespace-pre-line">{info[page][1]}</p>
-        </div>
-        <footer className="bg-gray-50 border-t py-8 text-center text-sm text-gray-500">
-          <p>© 2026 Pavilion Venture. All rights reserved.</p>
-        </footer>
-      </div>
+  const showToast = (msg: string) => {
+    setToast(msg);
+    setTimeout(() => setToast(null), 2500);
+  };
+
+  const addToCart = (product: Product) => {
+    setCart((prev) => {
+      const existing = prev.find((item) => item.product.id === product.id);
+      if (existing) {
+        return prev.map((item) =>
+          item.product.id === product.id ? { ...item, qty: item.qty + 1 } : item
+        );
+      }
+      return [...prev, { product, qty: 1 }];
+    });
+    showToast(`Added "${product.name}" to cart`);
+  };
+
+  const updateQty = (id: string, delta: number) => {
+    setCart((prev) =>
+      prev
+        .map((item) => (item.product.id === id ? { ...item, qty: item.qty + delta } : item))
+        .filter((item) => item.qty > 0)
     );
-  }
+  };
+
+  const totalItems = cart.reduce((sum, item) => sum + item.qty, 0);
+  const totalAmount = cart
+    .reduce((sum, item) => sum + parseFloat(item.product.price) * item.qty, 0)
+    .toFixed(2);
+
+  const handleCheckout = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!customerEmail || !shippingAddress) {
+      showToast("Please fill in your email and shipping address.");
+      return;
+    }
+    setOrderSubmitted(true);
+    setCart([]);
+  };
+
+  const policies: Record<string, { title: string; content: string }> = {
+    about: {
+      title: "About Pavilion Venture",
+      content:
+        "Pavilion Venture is an international online store specializing in quality consumer electronics, timepieces, and contemporary fashion. We serve customers exclusively across the United States and selected Middle East countries with tracked international shipping and dedicated customer support."
+    },
+    shipping: {
+      title: "Shipping Policy (US & Middle East Only)",
+      content:
+        "• Eligible Destinations: We ship exclusively to the United States, United Arab Emirates, Saudi Arabia, Kuwait, Qatar, Bahrain, and Oman.\n• Processing Time: Orders are processed within 1–3 business days.\n• Delivery Time: Standard tracked delivery takes 6–12 business days to the US and Middle East.\n• Shipping Cost: Free Standard Tracked Shipping on all orders."
+    },
+    refund: {
+      title: "Return & Refund Policy",
+      content:
+        "• 30-Day Return Guarantee: You may request a return within 30 days of receiving your item.\n• Eligibility: Items must be unused, in original condition and packaging.\n• Refund Processing: Once your return is received and inspected, refunds are issued back to your original payment method in USD within 3–5 business days."
+    },
+    privacy: {
+      title: "Privacy Policy",
+      content:
+        "We respect your privacy and collect only the information necessary to process and ship your order (name, shipping address, and email). All checkout data is protected with SSL encryption. We never sell or rent customer information to third parties."
+    },
+    terms: {
+      title: "Terms of Service",
+      content:
+        "All prices listed on shop.pavilionventure.com are in United States Dollars (USD). By placing an order, you confirm that your shipping address is within our supported regions (United States or eligible Middle East countries)."
+    },
+    contact: {
+      title: "Contact Us",
+      content:
+        "Need help with your order or product details? Reach out to our support team:\n• Email: support@pavilionventure.com\n• Operating Hours: Monday – Friday, 9:00 AM – 6:00 PM (GMT+8)\n• Response Time: Within 24 business hours."
+    }
+  };
+
+  const filteredProducts =
+    selectedCategory === 'All'
+      ? PRODUCTS
+      : PRODUCTS.filter((p) => p.category === selectedCategory);
 
   return (
-    <div className="min-h-screen bg-gray-50 text-black font-sans flex flex-col">
-      <header className="bg-white shadow sticky top-0 z-50">
-        <div className="max-w-6xl mx-auto px-4 py-3 flex flex-col items-center gap-2">
-          <h1 className="text-xl font-bold text-black whitespace-nowrap">Pavilion Venture</h1>
-          <div className="flex flex-wrap justify-center gap-x-6 gap-y-2 text-sm font-medium text-gray-700">
-            <button onClick={() => go('about')} className="hover:text-black">About</button>
-            <button onClick={() => go('terms')} className="hover:text-black">Terms</button>
-            <button onClick={() => go('privacy')} className="hover:text-black">Privacy</button>
-            <button onClick={() => go('contact')} className="hover:text-black">Contact</button>
-            <button onClick={() => go('shipping')} className="hover:text-black">Shipping</button>
-            <button onClick={() => go('refund')} className="hover:text-black">Refund</button>
-            <span className="text-black font-bold whitespace-nowrap">🛒 Cart ({cart.length})</span>
+    <div style={{ fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif', color: '#111827', backgroundColor: '#f9fafb', minHeight: '100vh', display: 'flex', flexDirection: 'column', margin: 0 }}>
+      {/* 顶部通知栏 */}
+      <div style={{ backgroundColor: '#111827', color: '#ffffff', textAlign: 'center', fontSize: '12px', padding: '8px 16px', letterSpacing: '0.3px' }}>
+        Free Tracked Shipping to the United States &amp; Middle East · Prices in USD ($)
+      </div>
+
+      {/* 顶部导航栏 */}
+      <header style={{ backgroundColor: '#ffffff', borderBottom: '1px solid #e5e7eb', position: 'sticky', top: 0, zIndex: 40 }}>
+        <div style={{ maxWidth: '1150px', margin: '0 auto', padding: '14px 20px', display: 'flex', flexWrap: 'wrap', alignItems: 'center', justifyContent: 'space-between', gap: '12px' }}>
+          <div onClick={() => goHome('All')} style={{ fontSize: '20px', fontWeight: 800, cursor: 'pointer', letterSpacing: '-0.5px' }}>
+            PAVILION VENTURE
           </div>
+
+          {/* 分类导航 */}
+          <nav style={{ display: 'flex', flexWrap: 'wrap', gap: '18px', fontSize: '14px', fontWeight: 500 }}>
+            {['All', 'Electronics', 'Watches', 'Fashion'].map((cat) => (
+              <button
+                key={cat}
+                onClick={() => goHome(cat)}
+                style={{
+                  background: 'none',
+                  border: 'none',
+                  cursor: 'pointer',
+                  padding: '4px 2px',
+                  fontWeight: selectedCategory === cat && !selectedProduct && !policyPage ? 700 : 500,
+                  color: selectedCategory === cat && !selectedProduct && !policyPage ? '#111827' : '#6b7280',
+                  borderBottom: selectedCategory === cat && !selectedProduct && !policyPage ? '2px solid #111827' : '2px solid transparent'
+                }}
+              >
+                {cat === 'All' ? 'All Products' : cat}
+              </button>
+            ))}
+          </nav>
+
+          {/* 购物车按钮 */}
+          <button
+            onClick={() => { setCartOpen(true); setOrderSubmitted(false); }}
+            style={{ backgroundColor: '#111827', color: '#ffffff', border: 'none', borderRadius: '8px', padding: '8px 14px', fontSize: '13px', fontWeight: 600, cursor: 'pointer' }}
+          >
+            Cart ({totalItems}) · ${totalAmount}
+          </button>
         </div>
       </header>
 
-      <div className="bg-black text-white text-center py-16 px-4">
-        <h2 className="text-4xl font-bold mb-2">Trusted Tech & Lifestyle Store</h2>
-        <p className="text-gray-300">Secure checkout · 7-day returns · Tracked worldwide delivery</p>
-      </div>
-
-      <main className="flex-1 max-w-6xl mx-auto p-4 w-full">
-        <h2 className="text-2xl font-bold mb-6 text-center">Featured Products</h2>
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-          {products.map((p) => (
-            <div key={p.id} className="bg-white rounded-xl p-4 shadow hover:shadow-md transition flex flex-col">
-              <img src={p.image} alt={p.name} className="w-full h-48 object-cover rounded mb-4" />
-              <h3 className="font-bold text-black text-sm mb-1 line-clamp-2">{p.name}</h3>
-              <p className="text-gray-500 text-xs mb-3 flex-1">{p.desc}</p>
-              <div className="flex items-baseline gap-2 mb-3">
-                <p className="text-red-600 font-bold text-lg">RM {p.price}</p>
-                <p className="text-gray-400 line-through text-sm">RM {p.oldPrice}</p>
-              </div>
-              <button onClick={() => addToCart(p.id)} className="w-full bg-black text-white py-2 rounded-lg hover:bg-gray-800 transition font-medium">
-                Add to Cart
-              </button>
-            </div>
-          ))}
-        </div>
-      </main>
-
-      <footer className="bg-white border-t py-10 text-center text-sm text-gray-500">
-        <p className="font-medium text-black mb-2">© 2026 Pavilion Venture. All rights reserved.</p>
-        <p className="mb-4">Email: support@pavilionventure.com | Shah Alam, Selangor, Malaysia</p>
-      </footer>
-    </div>
-  );
-}
+      {/* 轻提示 Toast */}
+      {toast && (
