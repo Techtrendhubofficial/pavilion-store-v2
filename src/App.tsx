@@ -1,26 +1,14 @@
 import React, { useState, useEffect } from 'react';
 
-interface Product {
-  id: string;
-  category: string;
-  name: string;
-  price: string;
-  oldPrice: string;
-  image: string;
-  desc: string;
-  brand: string;
-}
-
-const PRODUCTS: Product[] = [
+const PRODUCTS = [
   {
     id: "PV-US-02",
     category: "Fashion",
     name: "Women's Yoga Vest Halter Beautiful Back Tank-top",
     price: "19.56",
     oldPrice: "26.90",
-    image: "https://cjdropshipping.com",
-    desc: "Premium breathable women's halter yoga vest with cross beautiful back design, comfortable sports workout fitness athletic tank top.",
-    brand: "Generic"
+    image: "IMG_URL_02",
+    desc: "Premium breathable women's halter yoga vest with cross back design."
   },
   {
     id: "PV-US-03",
@@ -28,9 +16,8 @@ const PRODUCTS: Product[] = [
     name: "POEDAGAR Multifunction Dual Display Luminous Quartz Men's Watch",
     price: "29.90",
     oldPrice: "45.00",
-    image: "https://timeelegance.com.bd",
-    desc: "POEDAGAR luxury multifunction analog and digital dual display watch with luminous hands, waterproof stainless steel strap.",
-    brand: "POEDAGAR"
+    image: "IMG_URL_03",
+    desc: "Luxury analog and digital dual display watch with stainless steel strap."
   },
   {
     id: "PV-US-04",
@@ -38,9 +25,8 @@ const PRODUCTS: Product[] = [
     name: "3 Batteries Pro Drone 4K Selfie Camera Wifi Fpv Foldable Rc Quadcopter",
     price: "165.55",
     oldPrice: "219.00",
-    image: "https://cjdropshipping.com",
-    desc: "Professional 4K dual camera foldable aerial drone with 3 high-capacity batteries, real-time WiFi FPV transmission and obstacle avoidance.",
-    brand: "Generic"
+    image: "IMG_URL_04",
+    desc: "4K dual camera foldable drone with 3 batteries and WiFi FPV."
   },
   {
     id: "PV-US-05",
@@ -48,320 +34,156 @@ const PRODUCTS: Product[] = [
     name: "Women's French-Style Asymmetrical One-Shoulder Vacation Casual Dress",
     price: "16.49",
     oldPrice: "24.50",
-    image: "https://cjdropshipping.com",
-    desc: "Chic French-inspired irregular one-shoulder solid color A-line dress with flattering drape. Ideal for vacations and parties.",
-    brand: "Generic"
+    image: "IMG_URL_05",
+    desc: "Chic French-inspired one-shoulder solid color A-line dress."
   }
 ];
 
-const ALLOWED_COUNTRIES = [
-  "United States",
-  "United Arab Emirates",
-  "Saudi Arabia",
-  "Kuwait",
-  "Qatar",
-  "Bahrain",
-  "Oman"
-];
+const COUNTRIES = ["United States", "United Arab Emirates", "Saudi Arabia", "Kuwait", "Qatar", "Bahrain", "Oman"];
 
 export default function App() {
-  const [selectedCategory, setSelectedCategory] = useState<string>('All');
-  const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
-  const [policyPage, setPolicyPage] = useState<string | null>(null);
-  const [cart, setCart] = useState<{ product: Product; qty: number }[]>([]);
-  const [cartOpen, setCartOpen] = useState<boolean>(false);
-  const [toast, setToast] = useState<string | null>(null);
-  const [country, setCountry] = useState<string>('United States');
-  const [customerEmail, setCustomerEmail] = useState<string>('');
-  const [shippingAddress, setShippingAddress] = useState<string>('');
-  const [orderSubmitted, setOrderSubmitted] = useState<boolean>(false);
+  const [cat, setCat] = useState('All');
+  const [prod, setProd] = useState<any>(null);
+  const [page, setPage] = useState<string | null>(null);
+  const [cart, setCart] = useState<any[]>([]);
+  const [open, setOpen] = useState(false);
+  const [country, setCountry] = useState('United States');
+  const [email, setEmail] = useState('');
+  const [addr, setAddr] = useState('');
+  const [done, setDone] = useState(false);
 
   useEffect(() => {
-    const params = new URLSearchParams(window.location.search);
-    const prodId = params.get('product');
-    if (prodId) {
-      const found = PRODUCTS.find((p) => p.id === prodId);
-      if (found) setSelectedProduct(found);
-    }
+    const id = new URLSearchParams(window.location.search).get('product');
+    if (id) setProd(PRODUCTS.find((p) => p.id === id) || null);
   }, []);
 
-  const openProduct = (product: Product) => {
-    setSelectedProduct(product);
-    setPolicyPage(null);
-    const url = new URL(window.location.href);
-    url.searchParams.set('product', product.id);
-    window.history.pushState({}, '', url.toString());
+  const viewProd = (p: any) => {
+    setProd(p); setPage(null);
+    const u = new URL(window.location.href);
+    u.searchParams.set('product', p.id);
+    window.history.pushState({}, '', u.toString());
     window.scrollTo(0, 0);
   };
 
-  const goHome = (cat = 'All') => {
-    setSelectedProduct(null);
-    setPolicyPage(null);
-    setSelectedCategory(cat);
-    const url = new URL(window.location.href);
-    url.searchParams.delete('product');
-    window.history.pushState({}, '', url.toString());
+  const goHome = (c = 'All') => {
+    setProd(null); setPage(null); setCat(c);
+    const u = new URL(window.location.href);
+    u.searchParams.delete('product');
+    window.history.pushState({}, '', u.toString());
     window.scrollTo(0, 0);
   };
 
-  const showToast = (msg: string) => {
-    setToast(msg);
-    setTimeout(() => setToast(null), 2500);
-  };
-
-  const addToCart = (product: Product) => {
+  const addCart = (p: any) => {
     setCart((prev) => {
-      const existing = prev.find((item) => item.product.id === product.id);
-      if (existing) {
-        return prev.map((item) =>
-          item.product.id === product.id ? { ...item, qty: item.qty + 1 } : item
-        );
-      }
-      return [...prev, { product, qty: 1 }];
+      const ex = prev.find((i) => i.p.id === p.id);
+      return ex ? prev.map((i) => i.p.id === p.id ? { ...i, q: i.q + 1 } : i) : [...prev, { p, q: 1 }];
     });
-    showToast(`Added "${product.name}" to cart`);
+    setOpen(true); setDone(false);
   };
 
-  const updateQty = (id: string, delta: number) => {
-    setCart((prev) =>
-      prev
-        .map((item) => (item.product.id === id ? { ...item, qty: item.qty + delta } : item))
-        .filter((item) => item.qty > 0)
-    );
+  const total = cart.reduce((s, i) => s + parseFloat(i.p.price) * i.q, 0).toFixed(2);
+  const list = cat === 'All' ? PRODUCTS : PRODUCTS.filter((p) => p.category === cat);
+  const policies: Record<string, { t: string; c: string }> = {
+    about: { t: "About Us", c: "Pavilion Venture is an international online store serving customers across the United States and Middle East with tracked delivery." },
+    shipping: { t: "Shipping Policy", c: "Destinations: US, UAE, Saudi Arabia, Kuwait, Qatar, Bahrain, Oman.\nProcessing: 1–3 business days.\nDelivery: 6–12 business days. Free Standard Tracked Shipping." },
+    refund: { t: "Return & Refund Policy", c: "30-Day Return Guarantee: Items may be returned within 30 days if unused and in original packaging. Refunds are processed in USD within 3–5 business days." },
+    privacy: { t: "Privacy Policy", c: "We collect only the information needed to fulfill your order. All transactions are SSL encrypted. We never sell personal data." },
+    terms: { t: "Terms of Service", c: "All prices on ://pavilionventure.com are in USD. Orders ship exclusively to the US and eligible Middle East countries." },
+    contact: { t: "Contact Us", c: "Pavilion Venture Enterprise\nAddress: Block C-10-06, Setia City Residences, Persiaran Setia Dagang, Seksyen U13, 40170 Shah Alam, Selangor, Malaysia\nEmail: support@pavilionventure.com\nTel: +60166787883" }
   };
-
-  const totalItems = cart.reduce((sum, item) => sum + item.qty, 0);
-  const totalAmount = cart
-    .reduce((sum, item) => sum + parseFloat(item.product.price) * item.qty, 0)
-    .toFixed(2);
-
-  const handleCheckout = (e: React.FormEvent) => {
-    e.preventDefault();
-    if (!customerEmail || !shippingAddress) {
-      showToast("Please fill in your email and shipping address.");
-      return;
-    }
-    setOrderSubmitted(true);
-    setCart([]);
-  };
-
-  const policies: Record<string, { title: string; content: string }> = {
-    about: {
-      title: "About Pavilion Venture",
-      content:
-        "Pavilion Venture is an international online store specializing in quality consumer electronics, timepieces, and contemporary fashion. We serve customers exclusively across the United States and selected Middle East countries with tracked international shipping and dedicated customer support."
-    },
-    shipping: {
-      title: "Shipping Policy (US & Middle East Only)",
-      content:
-        "• Eligible Destinations: We ship exclusively to the United States, United Arab Emirates, Saudi Arabia, Kuwait, Qatar, Bahrain, and Oman.\n• Processing Time: Orders are processed within 1–3 business days.\n• Delivery Time: Standard tracked delivery takes 6–12 business days to the US and Middle East.\n• Shipping Cost: Free Standard Tracked Shipping on all orders."
-    },
-    refund: {
-      title: "Return & Refund Policy",
-      content:
-        "• 30-Day Return Guarantee: You may request a return within 30 days of receiving your item.\n• Eligibility: Items must be unused, in original condition and packaging.\n• Refund Processing: Once your return is received and inspected, refunds are issued back to your original payment method in USD within 3–5 business days."
-    },
-    privacy: {
-      title: "Privacy Policy",
-      content:
-        "We respect your privacy and collect only the information necessary to process and ship your order (name, shipping address, and email). All checkout data is protected with SSL encryption. We never sell or rent customer information to third parties."
-    },
-    terms: {
-      title: "Terms of Service",
-      content:
-        "All prices listed on shop.pavilionventure.com are in United States Dollars (USD). By placing an order, you confirm that your shipping address is within our supported regions (United States or eligible Middle East countries)."
-    },
-    contact: {
-      title: "Contact Us",
-      content:
-        "Need help with your order or product details? Reach out to our support team:\n• Email: support@pavilionventure.com\n• Operating Hours: Monday – Friday, 9:00 AM – 6:00 PM (GMT+8)\n• Response Time: Within 24 business hours."
-    }
-  };
-
-  const filteredProducts =
-    selectedCategory === 'All'
-      ? PRODUCTS
-      : PRODUCTS.filter((p) => p.category === selectedCategory);
 
   return (
-    <div style={{ fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif', color: '#111827', backgroundColor: '#f9fafb', minHeight: '100vh', display: 'flex', flexDirection: 'column', margin: 0 }}>
-      <div style={{ backgroundColor: '#111827', color: '#ffffff', textAlign: 'center', fontSize: '12px', padding: '8px 16px', letterSpacing: '0.3px' }}>
-        Free Tracked Shipping to the United States &amp; Middle East · Prices in USD ($)
+    <div style={{ fontFamily: 'system-ui, sans-serif', color: '#111827', backgroundColor: '#f9fafb', minHeight: '100vh', display: 'flex', flexDirection: 'column', margin: 0 }}>
+      <div style={{ backgroundColor: '#111827', color: '#fff', textAlign: 'center', fontSize: '12px', padding: '8px' }}>
+        Free Tracked Shipping to US &amp; Middle East · All Prices in USD ($)
       </div>
 
-      <header style={{ backgroundColor: '#ffffff', borderBottom: '1px solid #e5e7eb', position: 'sticky', top: 0, zIndex: 40 }}>
-        <div style={{ maxWidth: '1150px', margin: '0 auto', padding: '14px 20px', display: 'flex', flexWrap: 'wrap', alignItems: 'center', justifyContent: 'space-between', gap: '12px' }}>
-          <div onClick={() => goHome('All')} style={{ fontSize: '20px', fontWeight: 800, cursor: 'pointer', letterSpacing: '-0.5px' }}>
-            PAVILION VENTURE
-          </div>
-
-          <nav style={{ display: 'flex', flexWrap: 'wrap', gap: '18px', fontSize: '14px', fontWeight: 500 }}>
-            {['All', 'Electronics', 'Watches', 'Fashion'].map((cat) => (
-              <button
-                key={cat}
-                onClick={() => goHome(cat)}
-                style={{
-                  background: 'none',
-                  border: 'none',
-                  cursor: 'pointer',
-                  padding: '4px 2px',
-                  fontWeight: selectedCategory === cat && !selectedProduct && !policyPage ? 700 : 500,
-                  color: selectedCategory === cat && !selectedProduct && !policyPage ? '#111827' : '#6b7280',
-                  borderBottom: selectedCategory === cat && !selectedProduct && !policyPage ? '2px solid #111827' : '2px solid transparent'
-                }}^
-              >
-                {cat === 'All' ? 'All Products' : cat}
+      <header style={{ backgroundColor: '#fff', borderBottom: '1px solid #e5e7eb', position: 'sticky', top: 0, zIndex: 40 }}>
+        <div style={{ maxWidth: '1100px', margin: '0 auto', padding: '14px 20px', display: 'flex', flexWrap: 'wrap', alignItems: 'center', justifyContent: 'space-between', gap: '12px' }}>
+          <div onClick={() => goHome('All')} style={{ fontSize: '20px', fontWeight: 800, cursor: 'pointer' }}>PAVILION VENTURE</div>
+          <nav style={{ display: 'flex', gap: '16px', fontSize: '14px' }}>
+            {['All', 'Electronics', 'Watches', 'Fashion'].map((c) => (
+              <button key={c} onClick={() => goHome(c)} style={{ background: 'none', border: 'none', cursor: 'pointer', fontWeight: cat === c && !prod && !page ? 700 : 500, color: cat === c ? '#111827' : '#6b7280' }}>
+                {c === 'All' ? 'All Products' : c}
               </button>
             ))}
           </nav>
-
-          <button
-            onClick={() => { setCartOpen(true); setOrderSubmitted(false); }}
-            style={{ backgroundColor: '#111827', color: '#ffffff', border: 'none', borderRadius: '8px', padding: '8px 14px', fontSize: '13px', fontWeight: 600, cursor: 'pointer' }}
-          >
-            Cart ({totalItems}) · ${totalAmount}
+          <button onClick={() => { setOpen(true); setDone(false); }} style={{ backgroundColor: '#111827', color: '#fff', border: 'none', borderRadius: '8px', padding: '8px 14px', fontSize: '13px', fontWeight: 600, cursor: 'pointer' }}>
+            Cart ({cart.reduce((s, i) => s + i.q, 0)}) · ${total}
           </button>
         </div>
       </header>
-      {toast && (
-        <div style={{ position: 'fixed', bottom: '24px', right: '24px', backgroundColor: '#111827', color: '#fff', padding: '12px 18px', borderRadius: '8px', fontSize: '13px', boxShadow: '0 10px 15px -3px rgba(0,0,0,0.2)', zIndex: 60 }}>
-          {toast}
-        </div>
-      )}
 
-      <main style={{ flex: 1, maxWidth: '1150px', width: '100%', margin: '0 auto', padding: '28px 20px', boxSizing: 'border-box' }}>
-        {policyPage && policies[policyPage] ? (
-          <div style={{ backgroundColor: '#ffffff', padding: '32px', borderRadius: '12px', border: '1px solid #e5e7eb', maxWidth: '800px', margin: '0 auto' }}>
-            <button onClick={() => goHome('All')} style={{ background: 'none', border: 'none', color: '#4b5563', cursor: 'pointer', fontSize: '14px', marginBottom: '16px', padding: 0 }}>
-              ← Back to Store
-            </button>
-            <h1 style={{ fontSize: '24px', fontWeight: 700, marginBottom: '16px' }}>{policies[policyPage].title}</h1>
-            <p style={{ fontSize: '15px', lineHeight: 1.7, color: '#374151', whiteSpace: 'pre-line' }}>
-              {policies[policyPage].content}
-            </p>
+      <main style={{ flex: 1, maxWidth: '1100px', width: '100%', margin: '0 auto', padding: '24px 20px', boxSizing: 'border-box' }}>
+        {page && policies[page] ? (
+          <div style={{ backgroundColor: '#fff', padding: '24px', borderRadius: '12px', border: '1px solid #e5e7eb', maxWidth: '760px', margin: '0 auto' }}>
+            <button onClick={() => goHome('All')} style={{ background: 'none', border: 'none', color: '#4b5563', cursor: 'pointer', marginBottom: '12px' }}>← Back to Store</button>
+            <h1 style={{ fontSize: '22px', fontWeight: 700, marginBottom: '12px' }}>{policies[page].t}</h1>
+            <p style={{ fontSize: '15px', lineHeight: 1.7, color: '#374151', whiteSpace: 'pre-line' }}>{policies[page].c}</p>
           </div>
-        ) : selectedProduct ? (
-          <div style={{ backgroundColor: '#ffffff', padding: '28px', borderRadius: '12px', border: '1px solid #e5e7eb' }}>
-            <button onClick={() => goHome('All')} style={{ background: 'none', border: 'none', color: '#4b5563', cursor: 'pointer', fontSize: '14px', marginBottom: '20px', padding: 0 }}>
-              ← Back to Products
-            </button>
-            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '32px', alignItems: 'start' }}>
-              <img
-                src={selectedProduct.image}
-                alt={selectedProduct.name}
-                style={{ width: '100%', maxHeight: '420px', objectFit: 'contain', borderRadius: '10px', backgroundColor: '#f3f4f6', padding: '12px', boxSizing: 'border-box' }}
-              />
+        ) : prod ? (
+          <div style={{ backgroundColor: '#fff', padding: '24px', borderRadius: '12px', border: '1px solid #e5e7eb' }}>
+            <button onClick={() => goHome('All')} style={{ background: 'none', border: 'none', color: '#4b5563', cursor: 'pointer', marginBottom: '16px' }}>← Back to Products</button>
+            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(260px, 1fr))', gap: '24px', alignItems: 'start' }}>
+              <img src={prod.image} alt={prod.name} style={{ width: '100%', maxHeight: '360px', objectFit: 'contain', borderRadius: '10px', backgroundColor: '#f3f4f6', padding: '12px', boxSizing: 'border-box' }} />
               <div>
-                <div style={{ fontSize: '12px', color: '#6b7280', textTransform: 'uppercase', fontWeight: 600, marginBottom: '6px' }}>
-                  {selectedProduct.category} · SKU: {selectedProduct.id}
-                </div>
-                <h1 style={{ fontSize: '24px', fontWeight: 700, lineHeight: 1.3, margin: '0 0 14px 0' }}>{selectedProduct.name}</h1>
-                <div style={{ display: 'flex', alignItems: 'baseline', gap: '12px', marginBottom: '16px' }}>
-                  <span style={{ fontSize: '26px', fontWeight: 800, color: '#dc2626' }}>${selectedProduct.price} USD</span>
-                  <span style={{ fontSize: '16px', color: '#9ca3af', textDecoration: 'line-through' }}>${selectedProduct.oldPrice} USD</span>
-                </div>
-                <div style={{ display: 'inline-block', backgroundColor: '#ecfdf5', color: '#065f46', fontSize: '12px', fontWeight: 600, padding: '4px 10px', borderRadius: '6px', marginBottom: '18px' }}>
-                  ✓ In Stock · Free Tracked Shipping to US &amp; Middle East
-                </div>
-                <p style={{ fontSize: '15px', lineHeight: 1.6, color: '#4b5563', marginBottom: '24px' }}>{selectedProduct.desc}</p>
-                <button
-                  onClick={() => addToCart(selectedProduct)}
-                  style={{ width: '100%', maxWidth: '320px', backgroundColor: '#111827', color: '#ffffff', border: 'none', borderRadius: '8px', padding: '14px 20px', fontSize: '15px', fontWeight: 600, cursor: 'pointer' }}
-                >
-                  Add to Cart — ${selectedProduct.price} USD
+                <div style={{ fontSize: '12px', color: '#6b7280', fontWeight: 600 }}>{prod.category} · SKU: {prod.id}</div>
+                <h1 style={{ fontSize: '22px', fontWeight: 700, margin: '8px 0 12px 0' }}>{prod.name}</h1>
+                <div style={{ fontSize: '24px', fontWeight: 800, color: '#dc2626', marginBottom: '12px' }}>${prod.price} USD <span style={{ fontSize: '15px', color: '#9ca3af', textDecoration: 'line-through', fontWeight: 400 }}>${prod.oldPrice}</span></div>
+                <p style={{ fontSize: '14px', lineHeight: 1.6, color: '#4b5563', marginBottom: '20px' }}>{prod.desc}</p>
+                <button onClick={() => addCart(prod)} style={{ width: '100%', maxWidth: '280px', backgroundColor: '#111827', color: '#fff', border: 'none', borderRadius: '8px', padding: '12px', fontSize: '14px', fontWeight: 600, cursor: 'pointer' }}>
+                  Add to Cart — ${prod.price} USD
                 </button>
               </div>
             </div>
           </div>
         ) : (
-          <>
-            <div style={{ backgroundColor: '#111827', color: '#ffffff', borderRadius: '14px', padding: '36px 24px', textAlign: 'center', marginBottom: '28px' }}>
-              <h1 style={{ fontSize: '28px', fontWeight: 800, margin: '0 0 8px 0' }}>Curated Tech, Watches &amp; Lifestyle</h1>
-              <p style={{ fontSize: '14px', color: '#d1d5db', margin: 0 }}>
-                Exclusively Serving the United States &amp; Middle East · 30-Day Returns · Tracked Delivery
-              </p>
-            </div>
-
-            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(240px, 1fr))', gap: '20px' }}>
-              {filteredProducts.map((p) => (
-                <div
-                  key={p.id}
-                  style={{ backgroundColor: '#ffffff', borderRadius: '12px', border: '1px solid #e5e7eb', padding: '16px', display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}
-                >
-                  <div>
-                    <img
-                      src={p.image}
-                      alt={p.name}
-                      onClick={() => openProduct(p)}
-                      style={{ width: '100%', height: '210px', objectFit: 'contain', backgroundColor: '#f9fafb', borderRadius: '8px', marginBottom: '12px', cursor: 'pointer' }}
-                    />
-                    <div style={{ fontSize: '11px', color: '#6b7280', fontWeight: 600, marginBottom: '4px' }}>{p.category}</div>
-                    <h3
-                      onClick={() => openProduct(p)}
-                      style={{ fontSize: '15px', fontWeight: 700, margin: '0 0 8px 0', lineHeight: 1.4, cursor: 'pointer' }}
-                    >
-                      {p.name}
-                    </h3>
-                    <p style={{ fontSize: '12px', color: '#6b7280', lineHeight: 1.5, margin: '0 0 14px 0' }}>{p.desc}</p>
-                  </div>
-
-                  <div>
-                    <div style={{ display: 'flex', alignItems: 'baseline', gap: '8px', marginBottom: '12px' }}>
-                      <span style={{ fontSize: '18px', fontWeight: 800, color: '#dc2626' }}>${p.price} USD</span>
-                      <span style={{ fontSize: '13px', color: '#9ca3af', textDecoration: 'line-through' }}>${p.oldPrice}</span>
-                    </div>
-                    <div style={{ display: 'flex', gap: '8px' }}>
-                      <button
-                        onClick={() => addToCart(p)}
-                        style={{ flex: 1, backgroundColor: '#111827', color: '#ffffff', border: 'none', borderRadius: '8px', padding: '10px', fontSize: '13px', fontWeight: 600, cursor: 'pointer' }}
-                      >
-                        Add to Cart
-                      </button>
-                      <button
-                        onClick={() => openProduct(p)}
-                        style={{ backgroundColor: '#f3f4f6', color: '#111827', border: '1px solid #d1d5db', borderRadius: '8px', padding: '10px 12px', fontSize: '13px', fontWeight: 600, cursor: 'pointer' }}
-                      >
-                        Details
-                      </button>
-                    </div>
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(230px, 1fr))', gap: '18px' }}>
+            {list.map((p) => (
+              <div key={p.id} style={{ backgroundColor: '#fff', borderRadius: '12px', border: '1px solid #e5e7eb', padding: '16px', display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>
+                <div>
+                  <img src={p.image} alt={p.name} onClick={() => viewProd(p)} style={{ width: '100%', height: '200px', objectFit: 'contain', backgroundColor: '#f9fafb', borderRadius: '8px', marginBottom: '12px', cursor: 'pointer' }} />
+                  <div style={{ fontSize: '11px', color: '#6b7280', fontWeight: 600 }}>{p.category}</div>
+                  <h3 onClick={() => viewProd(p)} style={{ fontSize: '15px', fontWeight: 700, margin: '4px 0 8px 0', cursor: 'pointer' }}>{p.name}</h3>
+                  <p style={{ fontSize: '12px', color: '#6b7280', margin: '0 0 12px 0' }}>{p.desc}</p>
+                </div>
+                <div>
+                  <div style={{ fontSize: '18px', fontWeight: 800, color: '#dc2626', marginBottom: '10px' }}>${p.price} USD <span style={{ fontSize: '13px', color: '#9ca3af', textDecoration: 'line-through', fontWeight: 400 }}>${p.oldPrice}</span></div>
+                  <div style={{ display: 'flex', gap: '8px' }}>
+                    <button onClick={() => addCart(p)} style={{ flex: 1, backgroundColor: '#111827', color: '#fff', border: 'none', borderRadius: '8px', padding: '9px', fontSize: '13px', fontWeight: 600, cursor: 'pointer' }}>Add to Cart</button>
+                    <button onClick={() => viewProd(p)} style={{ backgroundColor: '#f3f4f6', color: '#111827', border: '1px solid #d1d5db', borderRadius: '8px', padding: '9px 12px', fontSize: '13px', fontWeight: 600, cursor: 'pointer' }}>Details</button>
                   </div>
                 </div>
-              ))}
-            </div>
-          </>
+              </div>
+            ))}
+          </div>
         )}
       </main>
 
-      {cartOpen && (
+      {open && (
         <div style={{ position: 'fixed', inset: 0, backgroundColor: 'rgba(0,0,0,0.5)', zIndex: 50, display: 'flex', justifyContent: 'flex-end' }}>
-          <div style={{ backgroundColor: '#ffffff', width: '100%', maxWidth: '400px', height: '100%', padding: '24px', boxSizing: 'border-box', overflowY: 'auto', display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>
-            <div>
-              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', borderBottom: '1px solid #e5e7eb', paddingBottom: '14px', marginBottom: '16px' }}>
-                <h2 style={{ fontSize: '18px', fontWeight: 700, margin: 0 }}>Shopping Cart ({totalItems})</h2>
-                <button onClick={() => setCartOpen(false)} style={{ background: 'none', border: 'none', fontSize: '20px', cursor: 'pointer' }}>✕</button>
+          <div style={{ backgroundColor: '#fff', width: '100%', maxWidth: '360px', height: '100%', padding: '20px', boxSizing: 'border-box', overflowY: 'auto' }}>
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', borderBottom: '1px solid #e5e7eb', paddingBottom: '12px', marginBottom: '16px' }}>
+              <h2 style={{ fontSize: '18px', fontWeight: 700, margin: 0 }}>Shopping Cart</h2>
+              <button onClick={() => setOpen(false)} style={{ background: 'none', border: 'none', fontSize: '20px', cursor: 'pointer' }}>✕</button>
+            </div>
+            {done ? (
+              <div style={{ backgroundColor: '#ecfdf5', padding: '16px', borderRadius: '8px', color: '#065f46', fontSize: '13px' }}>
+                <strong>Order Received!</strong> A USD payment link has been sent to <strong>{email}</strong> for delivery to <strong>{country}</strong>.
               </div>
-
-              {orderSubmitted ? (
-                <div style={{ backgroundColor: '#ecfdf5', border: '1px solid #a7f3d0', padding: '20px', borderRadius: '10px', color: '#065f46' }}>
-                  <h3 style={{ margin: '0 0 8px 0', fontSize: '16px' }}>Order Request Received!</h3>
-                  <p style={{ margin: 0, fontSize: '13px', lineHeight: 1.5 }}>
-                    Thank you! An invoice and secure USD payment link have been sent to <strong>{customerEmail}</strong> for delivery to <strong>{country}</strong>.
-                  </p>
-                </div>
-              ) : cart.length === 0 ? (
-                <p style={{ color: '#6b7280', fontSize: '14px', textAlign: 'center', marginTop: '40px' }}>Your cart is empty.</p>
-              ) : (
-                <>
-                  {cart.map((item) => (
-                    <div key={item.product.id} style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '10px 0', borderBottom: '1px solid #f3f4f6', gap: '10px' }}>
-                      <div style={{ flex: 1 }}>
-                        <div style={{ fontSize: '13px', fontWeight: 600 }}>{item.product.name}</div>
-                        <div style={{ fontSize: '12px', color: '#dc2626', fontWeight: 700 }}>${item.product.price} USD</div>
-                      </div>
-                      <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
-                        <button onClick={() => updateQty(item.product.id, -1)} style={{ width: '24px', height: '24px', border: '1px solid #d1d5db', borderRadius: '4px', background: '#fff', cursor: 'pointer' }}>-</button>
-                        <span style={{ fontSize: '13px', fontWeight: 600 }}>{item.qty}</span>
-                        <button onClick={() => updateQty(item.product.id, 1)} style={{ width: '24px', height: '24px', border: '1px solid #d1d5db', borderRadius: '4px', background: '#fff', cursor: 'pointer' }}>+</button>
-                      </div>
-                    </div>
-                  ))}
+            ) : cart.length === 0 ? (
+              <p style={{ color: '#6b7280', fontSize: '14px', textAlign: 'center', marginTop: '40px' }}>Your cart is empty.</p>
+            ) : (
+              <>
+                {cart.map((i) => (
+                  <div key={i.p.id} style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '8px 0', borderBottom: '1px solid #f3f4f6' }}>
+                    <div style={{ fontSize: '13px', fontWeight: 600, flex: 1 }}>{i.p.name} (x{i.q})</div>
+                    <div style={{ fontSize: '13px', color: '#dc2626', fontWeight: 700 }}>${(parseFloat(i.p.price) * i.q).toFixed(2)}</div>
+                  </div>
+                ))}
+                <form onSubmit={(e) => { e.preventDefault(); setDone(true); setCart([]); }} style={{ marginTop: '16px', display: 'flex', flexDirection: 'column', gap: '10px' }}>
+                  <div style={{ fontWeight: 700, fontSize: '15px' }}>Total (Free Shipping): ${total} USD</div>
+                  <select value={country} onChange={(e) => setCountry(e.target.value)} style={{ width: '100%', padding: '8px', borderRadius: '6px', border: '1px solid #d1d5db' }}>
+                    {COUNTRIES.map((c) => (<option key={c} value={c}>{c}</option>))}
+                  </select>
+                  <input type="email" required placeholder="Email Address" value={email} onChange={(e) => setEmail(e.target.value)} style={{ width: '100%', padding: '8px', borderRadius: '6px', border: '1px solid #d1d5db', boxSizing: 'border-box' }} />
