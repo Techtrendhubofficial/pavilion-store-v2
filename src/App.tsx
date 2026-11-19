@@ -8,6 +8,7 @@ const PRODUCTS = [
     price: "19.56",
     oldPrice: "26.90",
     image: "https://cjdropshipping.com",
+    payUrl: "https://stripe.com",
     desc: "Premium breathable women's halter yoga vest with cross back design."
   },
   {
@@ -17,6 +18,7 @@ const PRODUCTS = [
     price: "29.90",
     oldPrice: "45.00",
     image: "https://timeelegance.com.bd",
+    payUrl: "https://stripe.com",
     desc: "Luxury analog and digital dual display watch with stainless steel strap."
   },
   {
@@ -26,6 +28,7 @@ const PRODUCTS = [
     price: "165.55",
     oldPrice: "219.00",
     image: "https://cjdropshipping.com",
+    payUrl: "https://stripe.com",
     desc: "4K dual camera foldable drone with 3 batteries and WiFi FPV."
   },
   {
@@ -35,9 +38,11 @@ const PRODUCTS = [
     price: "16.49",
     oldPrice: "24.50",
     image: "https://cjdropshipping.com",
+    payUrl: "https://stripe.com",
     desc: "Chic French-inspired one-shoulder solid color A-line dress."
   }
 ];
+
 
 const COUNTRIES = ["United States", "United Arab Emirates", "Saudi Arabia", "Kuwait", "Qatar", "Bahrain", "Oman"];
 
