@@ -187,3 +187,29 @@ export default function App() {
                     {COUNTRIES.map((c) => (<option key={c} value={c}>{c}</option>))}
                   </select>
                   <input type="email" required placeholder="Email Address" value={email} onChange={(e) => setEmail(e.target.value)} style={{ width: '100%', padding: '8px', borderRadius: '6px', border: '1px solid #d1d5db', boxSizing: 'border-box' }} />
+                  <textarea required rows={2} placeholder="Street, City, State/Emirate, Postal Code" value={addr} onChange={(e) => setAddr(e.target.value)} style={{ width: '100%', padding: '8px', borderRadius: '6px', border: '1px solid #d1d5db', boxSizing: 'border-box' }} />
+                  <button type="submit" style={{ width: '100%', backgroundColor: '#111827', color: '#fff', border: 'none', borderRadius: '8px', padding: '12px', fontSize: '14px', fontWeight: 700, cursor: 'pointer' }}>
+                    Checkout (${total} USD)
+                  </button>
+                </form>
+              </>
+            )}
+          </div>
+        </div>
+      )}
+
+      <footer style={{ backgroundColor: '#fff', borderTop: '1px solid #e5e7eb', padding: '24px 20px', textAlign: 'center', fontSize: '13px', color: '#6b7280' }}>
+        <div style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'center', gap: '16px', marginBottom: '12px' }}>
+          {[{ k: 'about', l: 'About Us' }, { k: 'shipping', l: 'Shipping Policy' }, { k: 'refund', l: 'Return & Refund' }, { k: 'privacy', l: 'Privacy Policy' }, { k: 'terms', l: 'Terms' }, { k: 'contact', l: 'Contact Us' }].map((item) => (
+            <button key={item.k} onClick={() => { setPage(item.k); setProd(null); window.scrollTo(0, 0); }} style={{ background: 'none', border: 'none', color: '#374151', cursor: 'pointer', fontSize: '13px' }}>
+              {item.l}
+            </button>
+          ))}
+        </div>
+        <p style={{ margin: '0 0 4px 0', color: '#111827', fontWeight: 700 }}>© 2026 Pavilion Venture Enterprise. All rights reserved.</p>
+        <p style={{ margin: '0 0 4px 0' }}>Block C-10-06, Setia City Residences, Persiaran Setia Dagang, Seksyen U13, 40170 Shah Alam, Selangor, Malaysia</p>
+        <p style={{ margin: 0 }}>Email: support@pavilionventure.com · Tel: +60166787883 · Currency: USD ($)</p>
+      </footer>
+    </div>
+  );
+}
