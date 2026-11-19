@@ -7,7 +7,7 @@ const PRODUCTS = [
     name: "Women's Yoga Vest Halter Beautiful Back Tank-top",
     price: "19.56",
     oldPrice: "26.90",
-    image: "IMG_URL_02",
+    image: "https://cjdropshipping.com",
     desc: "Premium breathable women's halter yoga vest with cross back design."
   },
   {
@@ -16,7 +16,7 @@ const PRODUCTS = [
     name: "POEDAGAR Multifunction Dual Display Luminous Quartz Men's Watch",
     price: "29.90",
     oldPrice: "45.00",
-    image: "IMG_URL_03",
+    image: "https://timeelegance.com.bd",
     desc: "Luxury analog and digital dual display watch with stainless steel strap."
   },
   {
@@ -25,7 +25,7 @@ const PRODUCTS = [
     name: "3 Batteries Pro Drone 4K Selfie Camera Wifi Fpv Foldable Rc Quadcopter",
     price: "165.55",
     oldPrice: "219.00",
-    image: "IMG_URL_04",
+    image: "https://cjdropshipping.com",
     desc: "4K dual camera foldable drone with 3 batteries and WiFi FPV."
   },
   {
@@ -34,7 +34,7 @@ const PRODUCTS = [
     name: "Women's French-Style Asymmetrical One-Shoulder Vacation Casual Dress",
     price: "16.49",
     oldPrice: "24.50",
-    image: "IMG_URL_05",
+    image: "https://cjdropshipping.com",
     desc: "Chic French-inspired one-shoulder solid color A-line dress."
   }
 ];
