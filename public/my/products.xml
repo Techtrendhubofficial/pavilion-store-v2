@@ -1,4 +1,4 @@
-<?xml version="1.0" ?>
+<?xml version="1.0" encoding="UTF-8"?>
 <rss xmlns:g="http://base.google.com/ns/1.0" version="2.0">
   <channel>
     <title>Pavilion Venture Malaysia Store</title>
@@ -14,6 +14,8 @@
       <g:price>89.00 MYR</g:price>
       <g:condition>new</g:condition>
       <g:identifier_exists>no</g:identifier_exists>
+      <g:google_product_category>Health &amp; Beauty &gt; Personal Care &gt; Cosmetics &gt; Skin Care &gt; Face &gt; Eye Care</g:google_product_category>
+      <g:product_type>Skincare &gt; Eye Serum</g:product_type>
     </item>
     <item>
       <g:id>TTH-HEROLONA-02-B1F1</g:id>
@@ -25,6 +27,8 @@
       <g:price>98.00 MYR</g:price>
       <g:condition>new</g:condition>
       <g:identifier_exists>no</g:identifier_exists>
+      <g:google_product_category>Health &amp; Beauty &gt; Personal Care &gt; Cosmetics &gt; Makeup &gt; Face &gt; Foundation &amp; Concealer</g:google_product_category>
+      <g:product_type>Skincare &gt; Complexion Cream</g:product_type>
     </item>
     <item>
       <g:id>PV-SUNSCREEN-03-Silver-Gift-Box</g:id>
@@ -36,6 +40,8 @@
       <g:price>138.00 MYR</g:price>
       <g:condition>new</g:condition>
       <g:identifier_exists>no</g:identifier_exists>
+      <g:google_product_category>Health &amp; Beauty &gt; Personal Care &gt; Cosmetics &gt; Skin Care &gt; Face &gt; Sunscreen</g:google_product_category>
+      <g:product_type>Skincare &gt; Sunscreen</g:product_type>
     </item>
     <item>
       <g:id>TTH-OUHR-EYE-03-1BOX</g:id>
@@ -47,6 +53,8 @@
       <g:price>68.00 MYR</g:price>
       <g:condition>new</g:condition>
       <g:identifier_exists>no</g:identifier_exists>
+      <g:google_product_category>Health &amp; Beauty &gt; Personal Care &gt; Cosmetics &gt; Skin Care &gt; Face &gt; Eye Care</g:google_product_category>
+      <g:product_type>Skincare &gt; Eye Cream</g:product_type>
     </item>
     <item>
       <g:id>TTH-KUGE-ESS-04-1BOX</g:id>
@@ -58,6 +66,8 @@
       <g:price>78.00 MYR</g:price>
       <g:condition>new</g:condition>
       <g:identifier_exists>no</g:identifier_exists>
+      <g:google_product_category>Health &amp; Beauty &gt; Personal Care &gt; Cosmetics &gt; Skin Care &gt; Face &gt; Serums</g:google_product_category>
+      <g:product_type>Skincare &gt; Essence</g:product_type>
     </item>
     <item>
       <g:id>TTH-PUQIANNA-05-1BOX</g:id>
@@ -69,6 +79,8 @@
       <g:price>59.00 MYR</g:price>
       <g:condition>new</g:condition>
       <g:identifier_exists>no</g:identifier_exists>
+      <g:google_product_category>Health &amp; Beauty &gt; Personal Care &gt; Cosmetics &gt; Skin Care &gt; Face &gt; Masks</g:google_product_category>
+      <g:product_type>Skincare &gt; Facial Mask</g:product_type>
     </item>
     <item>
       <g:id>TTH-OUZICUI-FIRM-06-5PCS</g:id>
@@ -80,6 +92,8 @@
       <g:price>49.00 MYR</g:price>
       <g:condition>new</g:condition>
       <g:identifier_exists>no</g:identifier_exists>
+      <g:google_product_category>Health &amp; Beauty &gt; Personal Care &gt; Cosmetics &gt; Skin Care &gt; Face &gt; Masks</g:google_product_category>
+      <g:product_type>Skincare &gt; Facial Mask</g:product_type>
     </item>
     <item>
       <g:id>TTH-OUZICUI-BEGONIA-07-5PCS</g:id>
@@ -91,6 +105,8 @@
       <g:price>52.00 MYR</g:price>
       <g:condition>new</g:condition>
       <g:identifier_exists>no</g:identifier_exists>
+      <g:google_product_category>Health &amp; Beauty &gt; Personal Care &gt; Cosmetics &gt; Skin Care &gt; Face &gt; Masks</g:google_product_category>
+      <g:product_type>Skincare &gt; Facial Mask</g:product_type>
     </item>
     <item>
       <g:id>TTH-FUERSI-MASK-08-5PCS</g:id>
@@ -102,6 +118,8 @@
       <g:price>65.00 MYR</g:price>
       <g:condition>new</g:condition>
       <g:identifier_exists>no</g:identifier_exists>
+      <g:google_product_category>Health &amp; Beauty &gt; Personal Care &gt; Cosmetics &gt; Skin Care &gt; Face &gt; Masks</g:google_product_category>
+      <g:product_type>Skincare &gt; Facial Mask</g:product_type>
     </item>
     <item>
       <g:id>TTH-TTS-MASK-09-5PCS</g:id>
@@ -114,6 +132,8 @@
       <g:price>69.00 MYR</g:price>
       <g:condition>new</g:condition>
       <g:identifier_exists>no</g:identifier_exists>
+      <g:google_product_category>Health &amp; Beauty &gt; Personal Care &gt; Cosmetics &gt; Skin Care &gt; Face &gt; Masks</g:google_product_category>
+      <g:product_type>Skincare &gt; Facial Mask</g:product_type>
     </item>
     <item>
       <g:id>PV-YOGA-02-Black</g:id>
@@ -125,6 +145,8 @@
       <g:price>88.00 MYR</g:price>
       <g:condition>new</g:condition>
       <g:identifier_exists>no</g:identifier_exists>
+      <g:google_product_category>Apparel &amp; Accessories &gt; Clothing &gt; Activewear</g:google_product_category>
+      <g:product_type>Apparel &gt; Yoga Vest</g:product_type>
     </item>
     <item>
       <g:id>PV-DRESS-04-Burgundy</g:id>
@@ -136,6 +158,8 @@
       <g:price>195.00 MYR</g:price>
       <g:condition>new</g:condition>
       <g:identifier_exists>no</g:identifier_exists>
+      <g:google_product_category>Apparel &amp; Accessories &gt; Clothing &gt; Dresses</g:google_product_category>
+      <g:product_type>Apparel &gt; Dress</g:product_type>
     </item>
     <item>
       <g:id>PV-WATCH-05-Stainless-Steel</g:id>
@@ -147,6 +171,8 @@
       <g:price>129.00 MYR</g:price>
       <g:condition>new</g:condition>
       <g:identifier_exists>no</g:identifier_exists>
+      <g:google_product_category>Apparel &amp; Accessories &gt; Jewelry &gt; Watches</g:google_product_category>
+      <g:product_type>Accessories &gt; Watch</g:product_type>
     </item>
     <item>
       <g:id>PV-HOODIE-06-Oversized</g:id>
@@ -158,6 +184,8 @@
       <g:price>31.00 MYR</g:price>
       <g:condition>new</g:condition>
       <g:identifier_exists>no</g:identifier_exists>
+      <g:google_product_category>Apparel &amp; Accessories &gt; Clothing &gt; Shirts &amp; Tops</g:google_product_category>
+      <g:product_type>Apparel &gt; Sweatshirt</g:product_type>
     </item>
     <item>
       <g:id>PV-DRESS-09-Elegant-Black</g:id>
@@ -169,6 +197,8 @@
       <g:price>74.00 MYR</g:price>
       <g:condition>new</g:condition>
       <g:identifier_exists>no</g:identifier_exists>
+      <g:google_product_category>Apparel &amp; Accessories &gt; Clothing &gt; Dresses</g:google_product_category>
+      <g:product_type>Apparel &gt; Dress</g:product_type>
     </item>
     <item>
       <g:id>PV-HAIR-08-Ceramic-Pink</g:id>
@@ -180,6 +210,8 @@
       <g:price>128.00 MYR</g:price>
       <g:condition>new</g:condition>
       <g:identifier_exists>no</g:identifier_exists>
+      <g:google_product_category>Health &amp; Beauty &gt; Personal Care &gt; Hair Care &gt; Hair Styling Tools &gt; Hair Straighteners</g:google_product_category>
+      <g:product_type>Beauty &gt; Hair Straightener</g:product_type>
     </item>
     <item>
       <g:id>PV-GUASHA-10-Red-Therapy</g:id>
@@ -191,6 +223,8 @@
       <g:price>120.00 MYR</g:price>
       <g:condition>new</g:condition>
       <g:identifier_exists>no</g:identifier_exists>
+      <g:google_product_category>Health &amp; Beauty &gt; Personal Care &gt; Cosmetics &gt; Skin Care Tools</g:google_product_category>
+      <g:product_type>Beauty &gt; Guasha Massager</g:product_type>
     </item>
     <item>
       <g:id>PV-DETECTOR-01-Standard</g:id>
@@ -202,6 +236,8 @@
       <g:price>135.00 MYR</g:price>
       <g:condition>new</g:condition>
       <g:identifier_exists>no</g:identifier_exists>
+      <g:google_product_category>Electronics &gt; Surveillance &amp; Security &gt; Surveillance Equipment</g:google_product_category>
+      <g:product_type>Electronics &gt; Signal Detector</g:product_type>
     </item>
     <item>
       <g:id>PV-DRONE-07-3-Batteries-Pro</g:id>
@@ -213,8 +249,8 @@
       <g:price>745.00 MYR</g:price>
       <g:condition>new</g:condition>
       <g:identifier_exists>no</g:identifier_exists>
+      <g:google_product_category>Toys &amp; Games &gt; Toys &gt; Remote &amp; App-Controlled Figures &amp; Vehicles &gt; Remote &amp; App-Controlled Vehicles &gt; Remote &amp; App-Controlled Aircraft</g:google_product_category>
+      <g:product_type>Electronics &gt; Drone</g:product_type>
     </item>
   </channel>
 </rss>
-
-create-checkout
